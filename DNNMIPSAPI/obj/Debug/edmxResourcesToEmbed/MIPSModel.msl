@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DNNMIPSModelStoreContainer" CdmEntityContainer="DNNMIPSEntities">
+    <EntitySetMapping Name="tbl_Lookup_QPP_Measure_Type">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Lookup_QPP_Measure_Type">
+        <MappingFragment StoreEntitySet="tbl_Lookup_QPP_Measure_Type">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="QPP_Measure_Type_Code" ColumnName="QPP_Measure_Type_Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Lookup_QPP_Measures">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Lookup_QPP_Measures">
+        <MappingFragment StoreEntitySet="tbl_Lookup_QPP_Measures">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Measure_Num" ColumnName="Measure_Num" />
+          <ScalarProperty Name="Measure_Title" ColumnName="Measure_Title" />
+          <ScalarProperty Name="Measure_Description" ColumnName="Measure_Description" />
+          <ScalarProperty Name="Measure_Type_Code" ColumnName="Measure_Type_Code" />
+          <ScalarProperty Name="Measure_Type_Modifier" ColumnName="Measure_Type_Modifier" />
+          <ScalarProperty Name="Measure_Priority" ColumnName="Measure_Priority" />
+          <ScalarProperty Name="Domain" ColumnName="Domain" />
+          <ScalarProperty Name="Cross_Cutting" ColumnName="Cross_Cutting" />
+          <ScalarProperty Name="Specialty" ColumnName="Specialty" />
+          <ScalarProperty Name="Registry" ColumnName="Registry" />
+          <ScalarProperty Name="Reporting_Method" ColumnName="Reporting_Method" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="CMS_Year" ColumnName="CMS_Year" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Measure_URL" ColumnName="Measure_URL" />
+          <ScalarProperty Name="Message2" ColumnName="Message2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Lookup_QPP_Modality">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Lookup_QPP_Modality">
+        <MappingFragment StoreEntitySet="tbl_Lookup_QPP_Modality">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Modality" ColumnName="Modality" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Lookup_Registry">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Lookup_Registry">
+        <MappingFragment StoreEntitySet="tbl_Lookup_Registry">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Lookup_Specialty">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Lookup_Specialty">
+        <MappingFragment StoreEntitySet="tbl_Lookup_Specialty">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Measure_To_QPP_Modality">
+      <EntityTypeMapping TypeName="DNNMIPSModel.tbl_Measure_To_QPP_Modality">
+        <MappingFragment StoreEntitySet="tbl_Measure_To_QPP_Modality">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Measure_Num" ColumnName="Measure_Num" />
+          <ScalarProperty Name="Modality_Id" ColumnName="Modality_Id" />
+          <ScalarProperty Name="CMS_Year" ColumnName="CMS_Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_QPPMeasures_With_Modality">
+      <EntityTypeMapping TypeName="DNNMIPSModel.vw_QPPMeasures_With_Modality">
+        <MappingFragment StoreEntitySet="vw_QPPMeasures_With_Modality">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Measure_Num" ColumnName="Measure_Num" />
+          <ScalarProperty Name="Measure_Title" ColumnName="Measure_Title" />
+          <ScalarProperty Name="Measure_Description" ColumnName="Measure_Description" />
+          <ScalarProperty Name="Measure_Type_Code" ColumnName="Measure_Type_Code" />
+          <ScalarProperty Name="Measure_Type_Modifier" ColumnName="Measure_Type_Modifier" />
+          <ScalarProperty Name="Measure_Priority" ColumnName="Measure_Priority" />
+          <ScalarProperty Name="Domain" ColumnName="Domain" />
+          <ScalarProperty Name="Cross_Cutting" ColumnName="Cross_Cutting" />
+          <ScalarProperty Name="Specialty" ColumnName="Specialty" />
+          <ScalarProperty Name="Registry" ColumnName="Registry" />
+          <ScalarProperty Name="Reporting_Method" ColumnName="Reporting_Method" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="CMS_Year" ColumnName="CMS_Year" />
+          <ScalarProperty Name="MeasureType_Desc" ColumnName="MeasureType_Desc" />
+          <ScalarProperty Name="specialty_Desc" ColumnName="specialty_Desc" />
+          <ScalarProperty Name="registry_Desc" ColumnName="registry_Desc" />
+          <ScalarProperty Name="Modality" ColumnName="Modality" />
+          <ScalarProperty Name="Message_Desc" ColumnName="Message_Desc" />
+          <ScalarProperty Name="Measure_URL" ColumnName="Measure_URL" />
+          <ScalarProperty Name="Message2" ColumnName="Message2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_lookup_ImprovementActivities">
+      <EntityTypeMapping TypeName="DNNMIPSModel.Tbl_lookup_ImprovementActivities">
+        <MappingFragment StoreEntitySet="Tbl_lookup_ImprovementActivities">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_IA_Data">
+      <EntityTypeMapping TypeName="DNNMIPSModel.Tbl_IA_Data">
+        <MappingFragment StoreEntitySet="Tbl_IA_Data">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Weighing" ColumnName="Weighing" />
+          <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
+          <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+          <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

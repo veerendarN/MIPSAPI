@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DNNMIPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Tbl_IA_Data">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityID" Type="varchar" MaxLength="20" />
+    <Property Name="ActivityName" Type="nvarchar(max)" />
+    <Property Name="ActivityDescription" Type="nvarchar(max)" />
+    <Property Name="Subcategory" Type="smallint" Nullable="false" />
+    <Property Name="Weighing" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Tbl_lookup_ImprovementActivities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Lookup_QPP_Measure_Type">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QPP_Measure_Type_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Description" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="tbl_Lookup_QPP_Measures">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Measure_Num" Type="varchar" MaxLength="20" />
+    <Property Name="Measure_Title" Type="varchar" MaxLength="500" />
+    <Property Name="Measure_Description" Type="varchar(max)" />
+    <Property Name="Measure_Type_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Measure_Type_Modifier" Type="varchar" MaxLength="50" />
+    <Property Name="Measure_Priority" Type="varchar" MaxLength="5" />
+    <Property Name="Domain" Type="varchar" MaxLength="150" />
+    <Property Name="Cross_Cutting" Type="varchar" MaxLength="5" />
+    <Property Name="Specialty" Type="varchar" MaxLength="25" />
+    <Property Name="Registry" Type="varchar" MaxLength="10" />
+    <Property Name="Reporting_Method" Type="varchar" MaxLength="100" />
+    <Property Name="DisplayOrder" Type="int" />
+    <Property Name="CMS_Year" Type="int" />
+    <Property Name="Message" Type="varchar" MaxLength="2500" />
+    <Property Name="Measure_URL" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Message2" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="tbl_Lookup_QPP_Modality">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Modality" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_Lookup_Registry">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tbl_Lookup_Specialty">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DNNMIPS.dbo.tbl_Measure_To_QPP_Modality' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_Measure_To_QPP_Modality">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Measure_Num" Type="varchar" MaxLength="20" />
+    <Property Name="Modality_Id" Type="int" />
+    <Property Name="CMS_Year" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DNNMIPS.dbo.vw_QPPMeasures_With_Modality' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_QPPMeasures_With_Modality">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Measure_Priority" />
+      <PropertyRef Name="Specialty" />
+      <PropertyRef Name="Registry" />
+      <PropertyRef Name="MeasureType_Desc" />
+      <PropertyRef Name="specialty_Desc" />
+      <PropertyRef Name="registry_Desc" />
+      <PropertyRef Name="Modality" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Measure_Num" Type="varchar" MaxLength="20" />
+    <Property Name="Measure_Title" Type="varchar" MaxLength="500" />
+    <Property Name="Measure_Description" Type="varchar(max)" />
+    <Property Name="Measure_Type_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Measure_Type_Modifier" Type="varchar" MaxLength="50" />
+    <Property Name="Measure_Priority" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Domain" Type="varchar" MaxLength="150" />
+    <Property Name="Cross_Cutting" Type="varchar" MaxLength="5" />
+    <Property Name="Specialty" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Registry" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Reporting_Method" Type="varchar" MaxLength="100" />
+    <Property Name="DisplayOrder" Type="int" />
+    <Property Name="CMS_Year" Type="int" />
+    <Property Name="MeasureType_Desc" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="specialty_Desc" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="registry_Desc" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Modality" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Message_Desc" Type="varchar" MaxLength="2500" />
+    <Property Name="Measure_URL" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Message2" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <Association Name="FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities">
+    <End Role="Tbl_lookup_ImprovementActivities" Type="Self.Tbl_lookup_ImprovementActivities" Multiplicity="1" />
+    <End Role="Tbl_IA_Data" Type="Self.Tbl_IA_Data" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_lookup_ImprovementActivities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tbl_IA_Data">
+        <PropertyRef Name="Subcategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DNNMIPSModelStoreContainer">
+    <EntitySet Name="Tbl_IA_Data" EntityType="Self.Tbl_IA_Data" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_lookup_ImprovementActivities" EntityType="Self.Tbl_lookup_ImprovementActivities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Lookup_QPP_Measure_Type" EntityType="Self.tbl_Lookup_QPP_Measure_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Lookup_QPP_Measures" EntityType="Self.tbl_Lookup_QPP_Measures" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Lookup_QPP_Modality" EntityType="Self.tbl_Lookup_QPP_Modality" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Lookup_Registry" EntityType="Self.tbl_Lookup_Registry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Lookup_Specialty" EntityType="Self.tbl_Lookup_Specialty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Measure_To_QPP_Modality" EntityType="Self.tbl_Measure_To_QPP_Modality" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_Measure_To_QPP_Modality].[Id] AS [Id], 
+    [tbl_Measure_To_QPP_Modality].[Measure_Num] AS [Measure_Num], 
+    [tbl_Measure_To_QPP_Modality].[Modality_Id] AS [Modality_Id], 
+    [tbl_Measure_To_QPP_Modality].[CMS_Year] AS [CMS_Year]
+    FROM [dbo].[tbl_Measure_To_QPP_Modality] AS [tbl_Measure_To_QPP_Modality]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_QPPMeasures_With_Modality" EntityType="Self.vw_QPPMeasures_With_Modality" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_QPPMeasures_With_Modality].[ID] AS [ID], 
+    [vw_QPPMeasures_With_Modality].[Measure_Num] AS [Measure_Num], 
+    [vw_QPPMeasures_With_Modality].[Measure_Title] AS [Measure_Title], 
+    [vw_QPPMeasures_With_Modality].[Measure_Description] AS [Measure_Description], 
+    [vw_QPPMeasures_With_Modality].[Measure_Type_Code] AS [Measure_Type_Code], 
+    [vw_QPPMeasures_With_Modality].[Measure_Type_Modifier] AS [Measure_Type_Modifier], 
+    [vw_QPPMeasures_With_Modality].[Measure_Priority] AS [Measure_Priority], 
+    [vw_QPPMeasures_With_Modality].[Domain] AS [Domain], 
+    [vw_QPPMeasures_With_Modality].[Cross_Cutting] AS [Cross_Cutting], 
+    [vw_QPPMeasures_With_Modality].[Specialty] AS [Specialty], 
+    [vw_QPPMeasures_With_Modality].[Registry] AS [Registry], 
+    [vw_QPPMeasures_With_Modality].[Reporting_Method] AS [Reporting_Method], 
+    [vw_QPPMeasures_With_Modality].[DisplayOrder] AS [DisplayOrder], 
+    [vw_QPPMeasures_With_Modality].[CMS_Year] AS [CMS_Year], 
+    [vw_QPPMeasures_With_Modality].[MeasureType_Desc] AS [MeasureType_Desc], 
+    [vw_QPPMeasures_With_Modality].[specialty_Desc] AS [specialty_Desc], 
+    [vw_QPPMeasures_With_Modality].[registry_Desc] AS [registry_Desc], 
+    [vw_QPPMeasures_With_Modality].[Modality] AS [Modality], 
+    [vw_QPPMeasures_With_Modality].[Message_Desc] AS [Message_Desc], 
+    [vw_QPPMeasures_With_Modality].[Measure_URL] AS [Measure_URL], 
+    [vw_QPPMeasures_With_Modality].[Message2] AS [Message2]
+    FROM [dbo].[vw_QPPMeasures_With_Modality] AS [vw_QPPMeasures_With_Modality]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" Association="Self.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities">
+      <End Role="Tbl_lookup_ImprovementActivities" EntitySet="Tbl_lookup_ImprovementActivities" />
+      <End Role="Tbl_IA_Data" EntitySet="Tbl_IA_Data" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
