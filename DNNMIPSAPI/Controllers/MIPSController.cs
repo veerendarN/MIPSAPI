@@ -294,17 +294,9 @@ namespace DNNMIPSAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, resu);
         }
-
-        public MemoryStream GetStream(XLWorkbook excelWorkbook)
-        {
-            MemoryStream fs = new MemoryStream();
-            excelWorkbook.SaveAs(fs);
-            fs.Position = 0;
-            return fs;
-        }
+        
         [HttpGet]
-        //public List<ExportToExcelData> ExportToExcel(int MC, int OC, int PC, int TBP, string SM)
-        public List<ExportToExcelData> ExportToExcel(int MC, int OC, int PC, int TBP, string SM)
+        public HttpResponseMessage ExportToExcel(int MC, int OC, int PC, int TBP, string SM)
         {
             var data = new ExcelData();
             data.MeasuresCount = MC;
@@ -313,7 +305,6 @@ namespace DNNMIPSAPI.Controllers
             data.TotalBonusPoint = TBP;
             data.SelectedMeasures = SM;
             List<string> listStrings = new List<string>();
-            List<ExportToExcelData> obj = new List<ExportToExcelData>();
             string str = "<table border=1 style=font-family:Calibri><tr><td font style='font-weight: bold;'>Total Outcome Selected</td><td>" + data.OutcomeCoumt + "</td></tr><tr><td font style='font-weight: bold;'>Total High-priority Selected</td><td>" + data.PriorityCount + "</td></tr><tr><td font style='font-weight: bold;'>Total Measures Selected</td><td>" + data.MeasuresCount + "</td></tr>";
             if (data.TotalBonusPoint > 0)
             {
@@ -344,18 +335,15 @@ namespace DNNMIPSAPI.Controllers
                                        MeasureNumber = v.Measure_Num
                                    }).FirstOrDefault();
                     str += "<tr> <td>" + result1.MeasureNumber + "</td><td>" + result1.MeasureTitle + "</td> <td>" + result1.MeasureType + "</td><td>" + result1.MesureTypeModifier + "</td><td>" + result1.RegistryDescription + "</td>  <td>" + result1.Domain + "</td> <td>" + result1.Speciality + "</td> </tr>";
-                    obj.Add(result1);
                 }
                 str += "</table>";
             }
-            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            //result.Content = new StringContent(str);
-            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.xls");
-            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment"); //attachment will force download
-            //result.Content.Headers.ContentDisposition.FileName = "Measuredata.xls";
-            //return result;
-            return obj;
-
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new StringContent(str);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.xls");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment"); //attachment will force download
+            result.Content.Headers.ContentDisposition.FileName = "Measuredata.xls";
+            return result;
         }
 
         public List<IAData> GetActivities()
