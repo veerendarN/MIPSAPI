@@ -1,16 +1,12 @@
-﻿using ClosedXML.Excel;
-using DNNAPI.Models;
+﻿using DNNAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Data;
-using System.IO;
-using System.Web;
 
 namespace DNNMIPSAPI.Controllers
 {
@@ -25,28 +21,24 @@ namespace DNNMIPSAPI.Controllers
         public List<MeasureData> GetAllMeasures()
         {
             var MeasureDataList = new List<MeasureData>();
-
             using (var entity = new DNNMIPSEntities())
             {
+                var result = entity.vw_QPPMeasures_With_Modality.GroupBy(m => m.Measure_Num);
+                MeasureDataList = result.Select(mes => new MeasureData
+                {
+                    MeasureNumber = mes.FirstOrDefault().Measure_Num,
+                    MeasureTitle = mes.FirstOrDefault().Measure_Title,
+                    messageDesc = mes.FirstOrDefault().Measure_Description,
+                    DisplayOrder = mes.FirstOrDefault().DisplayOrder,
+                    MeasureTypeDesc = mes.FirstOrDefault().Message_Desc,
+                    MopdalityDesc = mes.FirstOrDefault().Modality,
+                    SpecialtyDesc = mes.FirstOrDefault().specialty_Desc,
+                    measureTypeCode = mes.FirstOrDefault().Measure_Type_Code,
+                    measure_priority = mes.FirstOrDefault().Measure_Priority,
+                    Measure_URL = mes.FirstOrDefault().Measure_URL,
+                    Message2 = mes.FirstOrDefault().Message2
 
-                MeasureDataList = (from mes in entity.vw_QPPMeasures_With_Modality
-
-                                   select new MeasureData
-                                   {
-                                       MeasureNumber = mes.Measure_Num,
-                                       MeasureTitle = mes.Measure_Title,
-                                       messageDesc = mes.Measure_Description,
-                                       DisplayOrder = mes.DisplayOrder,
-                                       MeasureTypeDesc = mes.Message_Desc,
-                                       MopdalityDesc = mes.Modality,
-                                       RegsitryDesc = mes.Registry,
-                                       SpecialtyDesc = mes.specialty_Desc,
-                                       measureTypeCode = mes.Measure_Type_Code,
-                                       measure_priority = mes.Measure_Priority,
-                                       Measure_URL = mes.Measure_URL,
-                                       Message2 = mes.Message2
-
-                                   }).OrderBy(m => m.DisplayOrder).ToList();
+                }).OrderBy(m => m.DisplayOrder).ToList();
             }
             return MeasureDataList;
         }
@@ -85,7 +77,7 @@ namespace DNNMIPSAPI.Controllers
 
         }
         [HttpGet]
-        public List<MeasureData> GetAllSelectedMeasures(string arrayOfValues) //,string[] chkModality,string[] chkRegistry,string chkSpeciality)
+        public List<MeasureData> GetAllSelectedMeasures(string arrayOfValues)
         {
 
             var MeasureDataList = new List<MeasureData>();
@@ -126,7 +118,6 @@ namespace DNNMIPSAPI.Controllers
 
         [HttpGet]
         public List<MeasureData> GetSelectionMeasures(string strMeasureType, string strModality = "", string strRegistry = "", string strSpecialty = "")
-        //public List<vw_QPPMeasures_With_Modality> GetSelectionMeasures(string strMeasureType, string strModality = "", string strRegistry = "", string strSpecialty = "")
         {
             var measuresList = new List<MeasureData>();
             var mtc = new List<string>();
@@ -242,29 +233,25 @@ namespace DNNMIPSAPI.Controllers
                         mesNumList2 = mesNumList;
                     }
                     //Final
-
-                    measuresList = (from mes in entity.vw_QPPMeasures_With_Modality
-                                    where (mesNumList.Contains(mes.Measure_Num))
-                                    select new MeasureData
-                                    {
-                                        MeasureNumber = mes.Measure_Num,
-                                        MeasureTitle = mes.Measure_Title,
-                                        messageDesc = mes.Message_Desc,
-                                        DisplayOrder = mes.DisplayOrder,
-                                        measureTypeCode = mes.Measure_Type_Code,
-                                        measure_priority = mes.Measure_Priority,
-                                        Measure_URL = mes.Measure_URL,
-                                        Message2 = mes.Message2
-                                    }).OrderBy(m => m.DisplayOrder).ToList();
+                    var result = entity.vw_QPPMeasures_With_Modality.Where(c => mesNumList.Contains(c.Measure_Num)).GroupBy(c => c.Measure_Num);
+                    measuresList = result.Select(mes => new MeasureData
+                    {
+                        MeasureNumber = mes.FirstOrDefault().Measure_Num,
+                        MeasureTitle = mes.FirstOrDefault().Measure_Title,
+                        messageDesc = mes.FirstOrDefault().Message_Desc,
+                        DisplayOrder = mes.FirstOrDefault().DisplayOrder,
+                        measureTypeCode = mes.FirstOrDefault().Measure_Type_Code,
+                        measure_priority = mes.FirstOrDefault().Measure_Priority,
+                        Measure_URL = mes.FirstOrDefault().Measure_URL,
+                        Message2 = mes.FirstOrDefault().Message2,
+                        RegsitryDesc = mes.FirstOrDefault().Registry,
+                        SpecialtyDesc = mes.FirstOrDefault().Specialty,
+                        MopdalityDesc = mes.FirstOrDefault().Modality
+                    }).OrderBy(m => m.DisplayOrder).ToList();
 
                 }
-                //var x = new MeasureData();
-                //x.MeasureNumber = strMeasureType + " [Total Result: " + Convert.ToString(measuresList.Count) + "List Array" + Convert.ToString(listarray.Count());
-                //x.MeasureTitle = string.Join(",", mtc.ToArray()) + strMessage;
-                //x.DisplayOrder = Int32.Parse("99999");
-                //measuresList.Add(x);
+                return measuresList;
             }
-            return measuresList;
         }
 
         [HttpGet]
@@ -294,18 +281,18 @@ namespace DNNMIPSAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, resu);
         }
-        
+
         [HttpGet]
         public HttpResponseMessage ExportToExcel(int MC, int OC, int PC, int TBP, string SM)
         {
             var data = new ExcelData();
             data.MeasuresCount = MC;
-            data.OutcomeCoumt = OC;
+            data.OutcomeCount = OC;
             data.PriorityCount = PC;
             data.TotalBonusPoint = TBP;
             data.SelectedMeasures = SM;
             List<string> listStrings = new List<string>();
-            string str = "<table border=1 style=font-family:Calibri><tr><td font style='font-weight: bold;'>Total Outcome Selected</td><td>" + data.OutcomeCoumt + "</td></tr><tr><td font style='font-weight: bold;'>Total High-priority Selected</td><td>" + data.PriorityCount + "</td></tr><tr><td font style='font-weight: bold;'>Total Measures Selected</td><td>" + data.MeasuresCount + "</td></tr>";
+            string str = "<table border=1 style=font-family:Calibri><tr><td font style='font-weight: bold;'>Total Outcome Selected</td><td>" + data.OutcomeCount + "</td></tr><tr><td font style='font-weight: bold;'>Total High-priority Selected</td><td>" + data.PriorityCount + "</td></tr><tr><td font style='font-weight: bold;'>Total Measures Selected</td><td>" + data.MeasuresCount + "</td></tr>";
             if (data.TotalBonusPoint > 0)
             {
                 str += "<tr> </tr> <tr><td colspan=7 style='color:red'>With your selections you potentially would have " + data.TotalBonusPoint + " bonus points (cap at 10% of total possible quality points; for most radiologists that is 6 points)</td></tr>";
@@ -335,6 +322,57 @@ namespace DNNMIPSAPI.Controllers
                                        MeasureNumber = v.Measure_Num
                                    }).FirstOrDefault();
                     str += "<tr> <td>" + result1.MeasureNumber + "</td><td>" + result1.MeasureTitle + "</td> <td>" + result1.MeasureType + "</td><td>" + result1.MesureTypeModifier + "</td><td>" + result1.RegistryDescription + "</td>  <td>" + result1.Domain + "</td> <td>" + result1.Speciality + "</td> </tr>";
+                }
+                str += "</table>";
+            }
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new StringContent(str);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.xls");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment"); //attachment will force download
+            result.Content.Headers.ContentDisposition.FileName = "Measuredata.xls";
+            return result;
+        }
+
+        [HttpGet]
+        public HttpResponseMessage ExportToExcelActivities(int HWC, int MWC, int TMC, int TBP, string SM)
+        {
+            var data = new ExcelData();
+            data.HighweightedCount = HWC;
+            data.MediumweightedCount = MWC;
+            data.MeasuresCount = TMC;
+            data.TotalBonusPoint = TBP;
+            data.SelectedMeasures = SM;
+            List<string> listStrings = new List<string>();
+            string str = "<table border=1 style=font-family:Calibri><tr><td font style='font-weight: bold;'>High Weighted Activities</td><td>" + data.HighweightedCount + "</td></tr><tr><td font style='font-weight: bold;'>Medium Weighted Activities</td><td>" + data.MeasuresCount + "</td></tr><tr><td font style='font-weight: bold;'>Total Activities</td><td>" + data.MeasuresCount + "</td></tr>";
+            //if (data.TotalBonusPoint > 0)
+            //{
+            //    str += "<tr> </tr> <tr><td colspan=7 style='color:red'>With your selections you potentially would have " + data.TotalBonusPoint + " bonus points (cap at 10% of total possible quality points; for most radiologists that is 6 points)</td></tr>";
+            //}
+            //if (data.TotalBonusPoint < 10)
+            //{
+            //    str += "<tr><td colspan = 7 style='color:red'> You have not selected enough measures to meet the full requirements; to review other options please visit the QCDR page.</td></tr><tr></tr> ";
+            //}
+            str += "<tr><td colspan=4 font style='font-weight: bold;'>Selected Activities</td></tr><tr></tr>";
+            str += "<tr font style='font-weight: bold;'> <td font style='font-weight: bold;'>Activity ID</td><td>ActivityName</td><td>Weighing</td><td>SubCategory</td></tr>";
+            using (var entity = new DNNMIPSEntities())
+            {
+                listStrings = data.SelectedMeasures.Split(',').ToList();
+
+                foreach (var item in listStrings)
+                {
+                    var ActivityID = item.Replace(' ', '_');
+                    var result1 = (from v in entity.Tbl_IA_Data
+                                   where (v.ActivityID == ActivityID)
+                                   select new ExportToExcelData
+                                   {
+
+                                       ActivityID = v.ActivityID,
+                                       ActivityName = v.ActivityName,
+                                       SubcategoryName = (entity.Tbl_lookup_ImprovementActivities.Where(d => d.Id == v.Subcategory).Select(d => d.Description).FirstOrDefault()),
+                                       Weighing = v.Weighing,
+                                   }).FirstOrDefault();
+
+                    str += "<tr> <td>" + result1.ActivityID + "</td><td>" + result1.ActivityName + "</td> <td>" + result1.Weighing + "</td><td>" + result1.SubcategoryName + "</td></tr>";
                 }
                 str += "</table>";
             }
@@ -378,10 +416,11 @@ namespace DNNMIPSAPI.Controllers
                                         ActivityDescription = c.ActivityDescription,
                                         Weighing = c.Weighing,
                                         ActivityName = c.ActivityName,
-                                        Validations = "",
+                                        Validations = c.Validations,
                                         SubcategoryName = (entity.Tbl_lookup_ImprovementActivities.Where(d => d.Id == c.Subcategory).Select(d => d.Description).FirstOrDefault()),
-                                        CMSsuggesteddocuments = "",
-                                        ACRsuggesteddocuments = ""
+                                        CMSsuggesteddocuments = c.CMSsuggesteddocuments,
+                                        ACRsuggesteddocuments = c.ACRsuggesteddocuments,
+                                        Message = c.Message == null ? "" : c.Message
                                     }).ToList();
 
                 }
@@ -397,10 +436,11 @@ namespace DNNMIPSAPI.Controllers
                                         ActivityDescription = c.ActivityDescription,
                                         Weighing = c.Weighing,
                                         ActivityName = c.ActivityName,
-                                        Validations = "",
+                                        Validations = c.Validations,
                                         SubcategoryName = (entity.Tbl_lookup_ImprovementActivities.Where(d => d.Id == c.Subcategory).Select(d => d.Description).FirstOrDefault()),
-                                        CMSsuggesteddocuments = "",
-                                        ACRsuggesteddocuments = ""
+                                        CMSsuggesteddocuments = c.CMSsuggesteddocuments,
+                                        ACRsuggesteddocuments = c.ACRsuggesteddocuments,
+                                        Message = c.Message == null ? "" : c.Message
                                     }).ToList();
                 }
                 else
@@ -416,10 +456,11 @@ namespace DNNMIPSAPI.Controllers
                                     ActivityDescription = c.ActivityDescription,
                                     Weighing = c.Weighing,
                                     ActivityName = c.ActivityName,
-                                    Validations = "",
+                                    Validations = c.Validations,
                                     SubcategoryName = (entity.Tbl_lookup_ImprovementActivities.Where(d => d.Id == c.Subcategory).Select(d => d.Description).FirstOrDefault()),
-                                    CMSsuggesteddocuments = "",
-                                    ACRsuggesteddocuments = ""
+                                    CMSsuggesteddocuments = c.CMSsuggesteddocuments,
+                                    ACRsuggesteddocuments = c.ACRsuggesteddocuments,
+                                    Message = c.Message == null ? "" : c.Message
                                 }).ToList();
 
 
@@ -440,9 +481,10 @@ namespace DNNMIPSAPI.Controllers
                           Weighing = c.Weighing,
                           SubcategoryName = (entity.Tbl_lookup_ImprovementActivities.Where(d => d.Id == c.Subcategory).Select(d => d.Description).FirstOrDefault()),
                           ActivityName = c.ActivityName,
-                          Validations = "",
-                          CMSsuggesteddocuments = "",
-                          ACRsuggesteddocuments = ""
+                          Validations = c.Validations,
+                          CMSsuggesteddocuments = c.CMSsuggesteddocuments,
+                          ACRsuggesteddocuments = c.ACRsuggesteddocuments,
+                          Message = c.Message == null ? "" : c.Message
                       }).ToList();
                 return result;
             };

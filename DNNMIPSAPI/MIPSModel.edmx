@@ -15,7 +15,10 @@
           <Property Name="ActivityDescription" Type="nvarchar(max)" />
           <Property Name="Subcategory" Type="smallint" Nullable="false" />
           <Property Name="Weighing" Type="varchar" MaxLength="20" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CMSsuggesteddocuments" Type="varchar(max)" />
+          <Property Name="ACRsuggesteddocuments" Type="varchar(max)" />
+          <Property Name="Validations" Type="varchar(max)" />
+          <Property Name="Message" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_lookup_ImprovementActivities">
           <Key>
@@ -288,21 +291,13 @@ warning 6002: The table/view 'DNNMIPS.dbo.vw_QPPMeasures_With_Modality' does not
           <EntitySet Name="tbl_Lookup_Specialty" EntityType="Self.tbl_Lookup_Specialty" />
           <EntitySet Name="tbl_Measure_To_QPP_Modality" EntityType="Self.tbl_Measure_To_QPP_Modality" />
           <EntitySet Name="vw_QPPMeasures_With_Modality" EntityType="Self.vw_QPPMeasures_With_Modality" />
-          <EntitySet Name="Tbl_lookup_ImprovementActivities" EntityType="DNNMIPSModel.Tbl_lookup_ImprovementActivities" />
           <EntitySet Name="Tbl_IA_Data" EntityType="DNNMIPSModel.Tbl_IA_Data" />
+          <EntitySet Name="Tbl_lookup_ImprovementActivities" EntityType="DNNMIPSModel.Tbl_lookup_ImprovementActivities" />
           <AssociationSet Name="FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" Association="DNNMIPSModel.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities">
             <End Role="Tbl_lookup_ImprovementActivities" EntitySet="Tbl_lookup_ImprovementActivities" />
             <End Role="Tbl_IA_Data" EntitySet="Tbl_IA_Data" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Tbl_lookup_ImprovementActivities">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tbl_IA_Data" Relationship="DNNMIPSModel.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" FromRole="Tbl_lookup_ImprovementActivities" ToRole="Tbl_IA_Data" />
-        </EntityType>
         <EntityType Name="Tbl_IA_Data">
           <Key>
             <PropertyRef Name="ID" />
@@ -313,8 +308,19 @@ warning 6002: The table/view 'DNNMIPS.dbo.vw_QPPMeasures_With_Modality' does not
           <Property Name="ActivityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Subcategory" Type="Int16" Nullable="false" />
           <Property Name="Weighing" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CMSsuggesteddocuments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ACRsuggesteddocuments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Validations" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tbl_lookup_ImprovementActivities" Relationship="DNNMIPSModel.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" FromRole="Tbl_IA_Data" ToRole="Tbl_lookup_ImprovementActivities" />
+        </EntityType>
+        <EntityType Name="Tbl_lookup_ImprovementActivities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_IA_Data" Relationship="DNNMIPSModel.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" FromRole="Tbl_lookup_ImprovementActivities" ToRole="Tbl_IA_Data" />
         </EntityType>
         <Association Name="FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities">
           <End Type="DNNMIPSModel.Tbl_lookup_ImprovementActivities" Role="Tbl_lookup_ImprovementActivities" Multiplicity="1" />
@@ -429,24 +435,27 @@ warning 6002: The table/view 'DNNMIPS.dbo.vw_QPPMeasures_With_Modality' does not
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_lookup_ImprovementActivities">
-            <EntityTypeMapping TypeName="DNNMIPSModel.Tbl_lookup_ImprovementActivities">
-              <MappingFragment StoreEntitySet="Tbl_lookup_ImprovementActivities">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_IA_Data">
             <EntityTypeMapping TypeName="DNNMIPSModel.Tbl_IA_Data">
               <MappingFragment StoreEntitySet="Tbl_IA_Data">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Validations" ColumnName="Validations" />
+                <ScalarProperty Name="ACRsuggesteddocuments" ColumnName="ACRsuggesteddocuments" />
+                <ScalarProperty Name="CMSsuggesteddocuments" ColumnName="CMSsuggesteddocuments" />
                 <ScalarProperty Name="Weighing" ColumnName="Weighing" />
                 <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
                 <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
                 <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_lookup_ImprovementActivities">
+            <EntityTypeMapping TypeName="DNNMIPSModel.Tbl_lookup_ImprovementActivities">
+              <MappingFragment StoreEntitySet="Tbl_lookup_ImprovementActivities">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

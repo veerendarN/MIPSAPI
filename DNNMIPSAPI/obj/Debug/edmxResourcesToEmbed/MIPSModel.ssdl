@@ -10,7 +10,10 @@
     <Property Name="ActivityDescription" Type="nvarchar(max)" />
     <Property Name="Subcategory" Type="smallint" Nullable="false" />
     <Property Name="Weighing" Type="varchar" MaxLength="20" />
-    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CMSsuggesteddocuments" Type="varchar(max)" />
+    <Property Name="ACRsuggesteddocuments" Type="varchar(max)" />
+    <Property Name="Validations" Type="varchar(max)" />
+    <Property Name="Message" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Tbl_lookup_ImprovementActivities">
     <Key>

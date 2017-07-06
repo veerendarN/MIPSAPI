@@ -20,7 +20,10 @@ namespace DNNMIPSAPI
         public string ActivityDescription { get; set; }
         public short Subcategory { get; set; }
         public string Weighing { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string CMSsuggesteddocuments { get; set; }
+        public string ACRsuggesteddocuments { get; set; }
+        public string Validations { get; set; }
+        public string Message { get; set; }
     
         public virtual Tbl_lookup_ImprovementActivities Tbl_lookup_ImprovementActivities { get; set; }
     }

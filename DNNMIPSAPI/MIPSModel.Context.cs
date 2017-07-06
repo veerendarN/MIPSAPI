@@ -32,7 +32,7 @@ namespace DNNMIPSAPI
         public virtual DbSet<tbl_Lookup_Specialty> tbl_Lookup_Specialty { get; set; }
         public virtual DbSet<tbl_Measure_To_QPP_Modality> tbl_Measure_To_QPP_Modality { get; set; }
         public virtual DbSet<vw_QPPMeasures_With_Modality> vw_QPPMeasures_With_Modality { get; set; }
-        public virtual DbSet<Tbl_lookup_ImprovementActivities> Tbl_lookup_ImprovementActivities { get; set; }
         public virtual DbSet<Tbl_IA_Data> Tbl_IA_Data { get; set; }
+        public virtual DbSet<Tbl_lookup_ImprovementActivities> Tbl_lookup_ImprovementActivities { get; set; }
     }
 }

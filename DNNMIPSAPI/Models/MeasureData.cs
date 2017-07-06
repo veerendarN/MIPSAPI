@@ -33,6 +33,10 @@ namespace DNNAPI.Models
         public string RegistryDescription { get; set; }
         public string Domain { get; set; }
         public string Speciality { get; set; }
+        public string SubcategoryName { get; set; }
+        public string ActivityID { get; set; }
+        public string ActivityName { get; set; }
+        public string Weighing { get; set; }
     }
 
     public static class Extensions
@@ -63,11 +67,14 @@ namespace DNNAPI.Models
     public class ExcelData
     {
         public int MeasuresCount { get; set; }
-        public int OutcomeCoumt { get; set; }
+        public int OutcomeCount { get; set; }
         public int PriorityCount { get; set; }
         public int TotalBonusPoint { get; set; }
         public string SelectedMeasures { get; set; }
-        
+
+        public int HighweightedCount { get; set; }
+        public int MediumweightedCount { get; set; }
+       
     }
 
     public class IAData
@@ -84,6 +91,7 @@ namespace DNNAPI.Models
         public string CMSsuggesteddocuments { get; set; }
         public string ACRsuggesteddocuments { get; set; }
         public string Validations { get; set; }
+        public string Message { get; set; }
 
     }
 }

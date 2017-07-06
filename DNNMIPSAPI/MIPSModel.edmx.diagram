@@ -12,8 +12,8 @@
         <EntityTypeShape EntityType="DNNMIPSModel.tbl_Lookup_Specialty" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DNNMIPSModel.tbl_Measure_To_QPP_Modality" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DNNMIPSModel.vw_QPPMeasures_With_Modality" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DNNMIPSModel.Tbl_lookup_ImprovementActivities" Width="1.5" PointX="5.375" PointY="6.75" />
-        <EntityTypeShape EntityType="DNNMIPSModel.Tbl_IA_Data" Width="1.5" PointX="7.625" PointY="6.25" />
+        <EntityTypeShape EntityType="DNNMIPSModel.Tbl_IA_Data" Width="1.5" PointX="7.625" PointY="7" />
+        <EntityTypeShape EntityType="DNNMIPSModel.Tbl_lookup_ImprovementActivities" Width="1.5" PointX="5.375" PointY="7.75" />
         <AssociationConnector Association="DNNMIPSModel.FK_Tbl_IA_Data_Tbl_lookup_ImprovementActivities" />
       </Diagram>
     </edmx:Diagrams>
